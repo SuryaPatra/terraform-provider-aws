@@ -5,7 +5,7 @@
 #  * EKS Cluster
 #
 
-resource "aws_iam_role" "demo-cluster" {
+resource "aws_iam_role" "pilot-cluster" {
   name = "terraform-eks-demo-cluster"
 
   assume_role_policy = <<POLICY
@@ -24,17 +24,17 @@ resource "aws_iam_role" "demo-cluster" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "pilot-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.demo-cluster.name
 }
 
-resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSServicePolicy" {
+resource "aws_iam_role_policy_attachment" "pilot-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
   role       = aws_iam_role.demo-cluster.name
 }
 
-resource "aws_security_group" "demo-cluster" {
+resource "aws_security_group" "pilot-cluster" {
   name        = "terraform-eks-demo-cluster"
   description = "Cluster communication with worker nodes"
   vpc_id      = aws_vpc.demo.id
@@ -47,7 +47,7 @@ resource "aws_security_group" "demo-cluster" {
   }
 
   tags = {
-    Name = "terraform-eks-demo"
+    Name = "pilot-eks-cluster"
   }
 }
 
