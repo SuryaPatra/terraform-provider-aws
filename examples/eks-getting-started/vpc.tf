@@ -15,13 +15,13 @@ resource "aws_vpc" "pilot-vpc" {
   )
 }
 
-resource "aws_subnet" "demo" {
+resource "aws_subnet" "pilot" {
   count = 2
 
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   cidr_block              = "10.0.${count.index}.0/24"
   map_public_ip_on_launch = true
-  vpc_id                  = aws_vpc.demo.id
+  vpc_id                  = aws_vpc.pilot-vpc.id
 
   tags = map(
     "Name", "pilot-eks-node",
@@ -29,26 +29,26 @@ resource "aws_subnet" "demo" {
   )
 }
 
-resource "aws_internet_gateway" "demo" {
-  vpc_id = aws_vpc.demo.id
+resource "aws_internet_gateway" "pilot-IGT" {
+  vpc_id = aws_vpc.pilot-vpc.id
 
   tags = {
     Name = "pilot-eks-node"
   }
 }
 
-resource "aws_route_table" "demo" {
-  vpc_id = aws_vpc.demo.id
+resource "aws_route_table" "pilot-RT" {
+  vpc_id = aws_vpc.pilot-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.demo.id
+    gateway_id = aws_internet_gateway.pilot-IGT.id
   }
 }
 
-resource "aws_route_table_association" "demo" {
+resource "aws_route_table_association" "pilot-RT-Asso" {
   count = 2
 
   subnet_id      = aws_subnet.demo.*.id[count.index]
-  route_table_id = aws_route_table.demo.id
+  route_table_id = aws_route_table.pilot-RT.id
 }
