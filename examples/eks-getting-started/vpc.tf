@@ -49,6 +49,6 @@ resource "aws_route_table" "pilot-RT" {
 resource "aws_route_table_association" "pilot-RT-Asso" {
   count = 2
 
-  subnet_id      = aws_subnet.demo.*.id[count.index]
+  subnet_id      = aws_subnet.pilot.*.id[count.index]
   route_table_id = aws_route_table.pilot-RT.id
 }
