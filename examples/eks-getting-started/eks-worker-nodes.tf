@@ -39,7 +39,7 @@ resource "aws_iam_role_policy_attachment" "pilot-cluster-node-IAM-AmazonEC2Conta
 }
 
 resource "aws_eks_node_group" "pilot-node-sg" {
-  cluster_name    = aws_eks_cluster.demo.name
+  cluster_name    = aws_eks_cluster.pilot-cluster.name
   node_group_name = "pilot-node"
   node_role_arn   = aws_iam_role.pilot-cluster-node-IAM.arn
   subnet_ids      = aws_subnet.pilot[*].id
