@@ -44,6 +44,10 @@ resource "aws_eks_node_group" "pilot-node-sg" {
   node_role_arn   = aws_iam_role.pilot-cluster-node-IAM.arn
   subnet_ids      = aws_subnet.pilot[*].id
   instance_types  = ["t2.micro"]
+  
+  tags = {
+    Name: "pilot-eks-node"
+    }
 
   scaling_config {
     desired_size = 3
