@@ -6,7 +6,6 @@
 
 resource "aws_iam_role" "pilot-cluster-node-IAM" {
   name = "pilot-cluster-node-IAM"
-
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -22,17 +21,14 @@ resource "aws_iam_role" "pilot-cluster-node-IAM" {
 }
 POLICY
 }
-
 resource "aws_iam_role_policy_attachment" "pilot-cluster-node-IAM-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.pilot-cluster-node-IAM.name
 }
-
 resource "aws_iam_role_policy_attachment" "pilot-cluster-node-IAM-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.pilot-cluster-node-IAM.name
 }
-
 resource "aws_iam_role_policy_attachment" "pilot-cluster-node-IAM-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.pilot-cluster-node-IAM.name
