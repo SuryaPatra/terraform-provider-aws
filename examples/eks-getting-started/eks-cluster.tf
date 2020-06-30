@@ -70,6 +70,7 @@ resource "aws_eks_cluster" "pilot-cluster" {
     security_group_ids = [aws_security_group.pilot-cluster-SG.id]
     subnet_ids         = aws_subnet.pilot[*].id
     endpoint_public_access = "false"
+    endpoint_private_access = "true"
   }
 
   depends_on = [
