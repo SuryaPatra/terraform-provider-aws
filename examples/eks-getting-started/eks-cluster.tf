@@ -69,6 +69,7 @@ resource "aws_eks_cluster" "pilot-cluster" {
   vpc_config {
     security_group_ids = [aws_security_group.pilot-cluster-SG.id]
     subnet_ids         = aws_subnet.pilot[*].id
+    endpoint_public_access = "false"
   }
 
   depends_on = [
