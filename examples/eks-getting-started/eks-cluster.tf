@@ -64,6 +64,7 @@ resource "aws_security_group_rule" "pilot-cluster-ingress-workstation-https" {
 resource "aws_eks_cluster" "pilot-cluster" {
   name     = var.cluster-name
   role_arn = aws_iam_role.pilot-cluster-IAM.arn
+  enabled_cluster_log_types = ["api", "audit", "scheduler"]
 
   vpc_config {
     security_group_ids = [aws_security_group.pilot-cluster-SG.id]
