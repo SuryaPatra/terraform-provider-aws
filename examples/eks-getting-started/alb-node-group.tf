@@ -3,7 +3,7 @@ resource "aws_lb" "eks-test" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.pilot-cluster-SG.id}"]
-  subnets            = ["${aws_subnet.pilot[0]}", "${aws_subnet.pilot[1]}"]
+  subnets            = ["${aws_subnet.pilot.*.id}"]
 
   enable_deletion_protection = false
 
